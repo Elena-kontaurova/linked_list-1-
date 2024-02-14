@@ -98,52 +98,41 @@ class LinkedList:
         '''Удаление первого найденного по значению '''
         current = self.head
         prev = None
+        found = False
 
-        
-        while current is None:
+        while current is not None:
             if current.value == value:
-                if prev is None:
-                    self.head = current.next
-                else:
-                    prev.next = current.next
-                return 
+                found = True
+                break
             prev = current
             current = current.next
-            
+
+        if found:
+            if prev is None:
+                self.head = current.next
+            else:
+                prev.next = current.next
+        else:
+            raise ValueError("Удаление не возожно.")
+
  
     def remove_last_value(self, value): 
         ''' удаление последнего найденного по значению ''' 
         current = self.head
         prev = None
-        last_found = None
-        
+        last_match = None
+
         while current is not None:
             if current.value == value:
-                last_found = current
+                last_match = prev
             prev = current
             current = current.next
-            
-        if last_found is None:
-            raise ValueError("Удаление невозможно")
-        if last_found == self.head:
-            self.head = last_found.next
+
+        if last_match is not None:
+            if last_match == None:
+                self.head = last_match.next
+            else:
+                last_match.next = last_match.next.next
         else:
-            prev.next = last_found.next 
-     
-         
- 
-my_list = LinkedList() 
-my_list.append_begin(4) 
-my_list.append_begin(5) 
-my_list.append_begin(6) 
-my_list.append_by_index(7, 1) 
-my_list.append_begin(8) 
-my_list.append_begin(9) 
-my_list.append_begin(1) 
-my_list.append_begin(5) 
-my_list.remove_first() 
-my_list.remove_last() 
-my_list.remove_at(6)
-my_list.remove_first_value(7)
-my_list.remove_last_value(5)
-print(len(my_list))
+            raise ValueError("Удаление не возможнно")
+    
